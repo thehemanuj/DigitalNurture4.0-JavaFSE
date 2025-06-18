@@ -1,0 +1,7 @@
+Q1)Why data structures in inventory management system? 
+
+Answer)managing large amount of data,faster access to product details, quick updating of product details, quick pricing
+
+Q2) suitable data structures?
+
+arraylist= for smaller inventory as 
