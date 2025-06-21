@@ -1,0 +1,24 @@
+Q1.What are Bubble Sort, Insertion Sort, Quick Sort, and Merge Sort? 
+A:Bubble Sort repeatedly compares adjacent elements and swaps them if they are in the wrong order.
+It is simple but inefficient for large datasets.
+Insertion Sort builds the sorted array one element at a time by inserting elements into their correct position—it works well on small or nearly sorted data.
+Quick Sort is a divide-and-conquer algorithm that selects a pivot,partitions the array,and recursively sorts subarrays—it is fast and efficient.
+Merge Sort divides the array into halves,sorts them recursively,and merges the results—it's stable and predictable with guaranteed performance.
+
+Q2.How is the Order class defined for this system? 
+A:The Order class contains three key attributes:orderId(an integer identifier for the order),customerName(the name of the person who placed the order),and totalPrice(the total value of the order).
+These fields help identify and sort orders by their monetary priority.
+
+Q3.How are Bubble Sort and Quick Sort implemented for orders? 
+A:Bubble Sort compares each pair of adjacent orders and swaps them if their totalPrice values are out of order.
+It continues this process until no more swaps are needed.Quick Sort selects a pivot,divides the orders into those less than or greater than the pivot based on totalPrice,and recursively applies the same logic to each partition.
+
+Q4.What is the time complexity of Bubble Sort and Quick Sort? 
+A:Bubble Sort has a time complexity of O(n²) in the average and worst cases,due to repeated comparisons and swaps.
+Quick Sort has an average time complexity of O(n log n),and a worst case of O(n²) if poor pivot selection leads to unbalanced partitions.
+However,with good pivot strategies,Quick Sort performs very efficiently.
+
+Q5.Why is Quick Sort preferred over Bubble Sort? 
+A:Quick Sort is generally preferred because it is much faster on average and scales better with larger datasets.
+Bubble Sort is simple but inefficient and becomes impractical when handling large numbers of orders.
+Quick Sort’s divide-and-conquer approach allows it to outperform Bubble Sort in most real-world scenarios.

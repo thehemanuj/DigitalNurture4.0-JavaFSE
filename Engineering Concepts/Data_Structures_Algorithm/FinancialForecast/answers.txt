@@ -1,0 +1,18 @@
+Q1.What is recursion,and how can it simplify certain problems? 
+A:Recursion is a programming technique where a method calls itself to solve smaller subproblems of a larger problem.
+It simplifies complex tasks by breaking them into repetitive,more manageable steps with a base case to end the recursion.
+
+Q2.How is recursion used to forecast future values? 
+A:A recursive method calculates future value by applying the formula: FutureValue(n)=FutureValue(n−1)*(1+growthRate) 
+It repeatedly calls itself while reducing the time period by one,multiplying by the growth rate until it reaches the base case(years=0),which returns the initial value.
+
+Q3.What does the recursive method to calculate future value look like? 
+A:The method accepts initial amount,growth rate,and number of years.
+It stops recursion when years=0 and otherwise calls itself for (years−1),multiplying by (1+growthRate) to apply annual growth cumulatively.
+
+Q4.What is the time complexity of this recursive algorithm? 
+A:The time complexity is O(n),where n is the number of years,as the method makes one call per year until it reaches the base case.
+
+Q5.How can the recursive solution be optimized to avoid excessive computation? 
+A:While this case does not involve overlapping subproblems,recursive depth can still be minimized by using an iterative solution for better stack performance.
+If recursion is necessary,memoization can be applied in problems involving repeated calculations.

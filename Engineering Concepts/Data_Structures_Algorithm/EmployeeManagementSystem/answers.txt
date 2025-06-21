@@ -1,0 +1,22 @@
+Q1. How are arrays represented in memory, and what are their advantages? 
+A: Arrays are contiguous blocks of memory where each element is stored at a fixed offset from the base address. 
+This allows constant-time access (O(1)) to any element by using its index. 
+Advantages include: fast access to elements via indexing, predictable and compact memory layout, and efficient storage for fixed-size collections of homogeneous data.
+
+Q2. What attributes does the Employee class contain in this system? 
+A: The Employee class contains the following attributes: employeeId (a unique identifier), name (the employee’s full name), position (the job title), and salary (the compensation amount). 
+These fields enable detailed and searchable employee records.
+
+Q3. How are employee records managed using arrays in the implementation? 
+A: An array of Employee objects stores the employee records. 
+The system supports operations like adding a new employee to the next available slot, searching by attributes, traversing the array to display information, and deleting a record by setting its slot to null.
+
+Q4. What is the time complexity of the core operations (add, search, traverse, delete)? 
+A: Add: O(1) best case (first empty slot), O(n) worst case (searching for a slot) 
+Search: O(n) as each element may need to be checked 
+Traverse: O(n) as every index is visited 
+Delete: O(n) since it involves searching before deleting
+
+Q5. What are the limitations of arrays and when should you use them? 
+A: Limitations include fixed size (non-resizable), wasted memory from unused slots, and inefficient middle insertions or deletions. 
+Arrays are ideal when the size is known in advance, fast access is needed, and the structure won't change frequently.

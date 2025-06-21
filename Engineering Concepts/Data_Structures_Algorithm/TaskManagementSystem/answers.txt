@@ -1,0 +1,23 @@
+Q1.What are the different types of linked lists? 
+A:Singly Linked List consists of nodes where each node holds data and a reference to the next node.
+It is unidirectional and efficient for forward traversal.Doubly Linked List has nodes with references to both the next and previous nodes,allowing traversal in both directions.
+It provides more flexibility for insertions and deletions but uses more memory due to extra pointers.
+
+Q2.How is the Task class defined in this system? 
+A:The Task class contains attributes such as taskId(a unique identifier for the task),taskName(the name or description of the task),and status(the current state of the task like “Pending” or “Completed”).
+These fields enable structured and meaningful task tracking.
+
+Q3.How is a singly linked list implemented to manage tasks? 
+A:A singly linked list is used where each Task node points to the next task in the list.
+The TaskManager class maintains a reference to the head of the list and provides methods to add new tasks at the end,search for a task by ID or name,display all tasks from start to end,and delete a task while maintaining the chain.
+
+Q4.What is the time complexity of each core operation? 
+A:Add:O(n) in the worst case as it traverses to the end to insert 
+Search:O(n) as each node may need to be examined 
+Traverse:O(n) since every node is visited 
+Delete:O(n) because it first searches for the node and then updates the links accordingly
+
+Q5.What are the advantages of using linked lists over arrays for dynamic data? 
+A:Linked lists allow dynamic memory allocation so the size can grow or shrink as needed,unlike arrays which have fixed size.
+Insertion and deletion are more efficient in linked lists when working with middle elements,as they only involve pointer adjustments.
+Arrays require shifting elements which can be costly in terms of time,especially for large datasets.

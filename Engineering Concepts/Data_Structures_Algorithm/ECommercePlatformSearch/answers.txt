@@ -1,0 +1,24 @@
+Q1. What is Big O notation, and how does it help in analyzing algorithms?
+A: Big O notation describes the upper bound of an algorithm’s growth rate relative to the input size. 
+    It helps developers analyze the efficiency and scalability of algorithms by focusing on how the runtime increases as the input data grows.
+    It abstracts away hardware and implementation details and focuses purely on algorithmic performance.
+
+Q2. What are the best, average, and worst-case scenarios for search operations? 
+A: Best Case: The item is found immediately (e.g., first element in linear search)-O(1) 
+   Average Case: The item is found somewhere in the middle of the dataset – O(n/2) for linear, O(log n) for binary 
+   Worst Case: The item is not found, or found at the last position – O(n) for linear, O(log n) for binary search on sorted data
+
+Q3. What is the time complexity of linear and binary search algorithms?
+A: Linear Search: 
+        Best case: O(1) 
+        Worst/Average case: O(n)
+
+   Binary Search (on sorted data):
+        Best case: O(1)
+        Worst/Average case: O(log n)
+
+Q4. Which search algorithm is more suitable for the platform and why?
+A: For large datasets where performance is critical, binary search is more suitable because of its O(log n) complexity.
+However, it requires the data to be sorted by the search field.
+For smaller or unsorted datasets, linear search can be simpler to use.
+On a production e-commerce platform, indexing or more advanced data structures like hash maps or search trees are often used to combine speed and flexibility.

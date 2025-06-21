@@ -1,0 +1,22 @@
+Q1.What is linear search and binary search? 
+A:Linear search is a simple algorithm that scans each element in a collection sequentially until it finds a match.
+It works on both sorted and unsorted data but is less efficient for large datasets.
+Binary search is a faster algorithm that only works on sorted data.
+It repeatedly divides the search space in half,eliminating half the elements with each step.
+
+Q2.How is the Book class defined in this system? 
+A:The Book class includes attributes like bookId(a unique identifier),title(the name of the book),and author(the writer of the book).
+These fields allow users to search for and retrieve books based on their title or author efficiently.
+
+Q3.How are linear and binary searches implemented for books? 
+A:Linear search scans each book in the list to compare its title with the search query.
+It is simple and works on unsorted lists.Binary search assumes that the list of books is sorted by title and uses a divide-and-conquer approach to narrow down the search range until a match is found or the search fails.
+
+Q4.What is the time complexity of linear and binary search? 
+A:Linear search has a time complexity of O(n) in the worst and average cases,and O(1) in the best case if the item is first.
+Binary search has a time complexity of O(log n) in the best,average,and worst cases,as each step reduces the search range by half.
+
+Q5.When should you use linear search and binary search? 
+A:Use linear search for small datasets or when the data is unsorted.
+Use binary search for larger datasets where sorting is guaranteed,as it is significantly faster in those cases.
+If frequent search operations are needed,binary search is more suitable after an initial sorting step.

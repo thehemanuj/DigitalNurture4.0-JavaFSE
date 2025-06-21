@@ -1,0 +1,24 @@
+Q1.Why are data structures and algorithms essential in handling large inventories? 
+A:Efficient data structures and algorithms are critical for handling large inventories because they ensure fast retrieval,modification,and storage of product data.
+Without optimized structures,operations like searching,updating,or deleting products would become slower as the inventory grows,leading to performance bottlenecks and delayed processing in warehouse operations.
+
+Q2.What types of data structures are suitable for inventory management? 
+A:HashMap is ideal for inventory systems where productId is a unique key,allowing constant-time access to products.
+ArrayList or LinkedList may be suitable for smaller or order-sensitive systems,though they have linear time complexities for search and deletion.
+Trie or TreeMap can be used when range queries or prefix searches are needed.
+
+Q3.How is the Product class defined for this system? 
+A:The Product class includes the following attributes:productId(an integer identifier),productName(the name of the product),quantity(the stock available),and price(the cost per item).
+These attributes enable all core inventory operations such as tracking availability and modifying price or stock levels.
+
+Q4.What data structure was used to store products and why? 
+A:HashMap was chosen to store products using productId as the key.
+This allows constant-time(O(1)) performance for adding,updating,deleting,and retrieving products,making it highly efficient for large datasets.
+
+Q5.What is the time complexity of add,update,and delete operations in a HashMap? 
+A:Add:O(1) average case using put() Update:O(1) since updating a value for an existing key is a put() operation Delete:O(1) using remove() by key 
+In worst-case scenarios with many hash collisions,operations can degrade to O(n),but with good hash function design,this is rare.
+
+Q6.How can these operations be further optimized? 
+A:Operations can be optimized by using a well-distributed hash function to minimize collisions.
+Preallocating initial capacity for the HashMap reduces resizing overhead.For very large datasets,sharding the inventory or combining indexing techniques like B-trees with hash maps can further improve performance and scalability.
