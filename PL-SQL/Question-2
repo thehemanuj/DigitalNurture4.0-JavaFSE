@@ -1,0 +1,94 @@
+CREATE TABLE error_log (
+    error_id        NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    error_time      DATE DEFAULT SYSDATE,
+    error_message   VARCHAR2(4000),
+    procedure_name  VARCHAR2(100)
+);
+CREATE OR REPLACE PROCEDURE LogError (
+    p_message   IN VARCHAR2,
+    p_proc_name IN VARCHAR2
+)
+IS
+BEGIN
+    INSERT INTO error_log (error_message, procedure_name)
+    VALUES (p_message, p_proc_name);
+EXCEPTION
+    WHEN OTHERS THEN
+        NULL; -- suppress logging errors to avoid recursion
+END;
+
+CREATE OR REPLACE PROCEDURE SafeTransferFunds(
+    p_from_account_id IN NUMBER,
+    p_to_account_id   IN NUMBER,
+    p_amount          IN NUMBER
+)
+IS
+    v_balance NUMBER;
+    ex_insufficient_funds EXCEPTION;
+BEGIN
+    SELECT Balance INTO v_balance FROM Accounts WHERE AccountID = p_from_account_id;
+
+    IF v_balance < p_amount THEN
+        RAISE ex_insufficient_funds;
+    END IF;
+
+    UPDATE Accounts SET Balance = Balance - p_amount, LastModified = SYSDATE
+    WHERE AccountID = p_from_account_id;
+
+    UPDATE Accounts SET Balance = Balance + p_amount, LastModified = SYSDATE
+    WHERE AccountID = p_to_account_id;
+
+    COMMIT;
+EXCEPTION
+    WHEN ex_insufficient_funds THEN
+        ROLLBACK;
+        LogError('Insufficient funds in Account ID ' || p_from_account_id, 'SafeTransferFunds');
+    WHEN OTHERS THEN
+        ROLLBACK;
+        LogError(SQLERRM, 'SafeTransferFunds');
+END;
+/
+
+CREATE OR REPLACE PROCEDURE UpdateSalary(
+    p_emp_id   IN NUMBER,
+    p_percent  IN NUMBER
+)
+IS
+BEGIN
+    UPDATE Employees
+    SET Salary = Salary + (Salary * p_percent / 100)
+    WHERE EmployeeID = p_emp_id;
+
+    IF SQL%ROWCOUNT = 0 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Employee ID not found.');
+    END IF;
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        LogError(SQLERRM, 'UpdateSalary');
+END;
+/
+
+
+CREATE OR REPLACE PROCEDURE AddNewCustomer(
+    p_customer_id IN NUMBER,
+    p_name        IN VARCHAR2,
+    p_dob         IN DATE,
+    p_balance     IN NUMBER
+)
+IS
+BEGIN
+    INSERT INTO Customers (CustomerID, Name, DOB, Balance, LastModified)
+    VALUES (p_customer_id, p_name, p_dob, p_balance, SYSDATE);
+
+    COMMIT;
+EXCEPTION
+    WHEN DUP_VAL_ON_INDEX THEN
+        LogError('Duplicate Customer ID: ' || p_customer_id, 'AddNewCustomer');
+    WHEN OTHERS THEN
+        LogError(SQLERRM, 'AddNewCustomer');
+END;
+/
+
+

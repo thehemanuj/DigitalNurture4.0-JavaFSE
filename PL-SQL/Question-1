@@ -1,0 +1,45 @@
+ALTER TABLE Customers ADD IsVIP VARCHAR2(5);
+
+BEGIN
+  FOR cust IN (
+    SELECT c.CustomerID
+    FROM Customers c
+    WHERE FLOOR(MONTHS_BETWEEN(SYSDATE, c.DOB)/12) > 60
+  ) LOOP
+    -- Assuming interest rate is applied per loan
+    UPDATE Loans
+    SET InterestRate = InterestRate - (InterestRate * 0.01)
+    WHERE CustomerID = cust.CustomerID;
+  END LOOP;
+  COMMIT;
+END;
+/
+
+BEGIN
+  FOR cust IN (
+    SELECT CustomerID
+    FROM Customers
+    WHERE Balance > 10000
+  ) LOOP
+    UPDATE Customers
+    SET IsVIP = 'TRUE'
+    WHERE CustomerID = cust.CustomerID;
+  END LOOP;
+  COMMIT;
+END;
+/
+
+SET SERVEROUTPUT ON;
+
+BEGIN
+  FOR loan_rec IN (
+    SELECT LoanID, CustomerID, EndDate
+    FROM Loans
+    WHERE EndDate BETWEEN SYSDATE AND SYSDATE + 30
+  ) LOOP
+    DBMS_OUTPUT.PUT_LINE('Reminder: Loan ID ' || loan_rec.LoanID || 
+                         ' for Customer ' || loan_rec.CustomerID || 
+                         ' is due on ' || TO_CHAR(loan_rec.EndDate, 'DD-MON-YYYY'));
+  END LOOP;
+END;
+/

@@ -1,0 +1,97 @@
+CREATE TABLE error_log (
+    error_id        NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    error_time      DATE DEFAULT SYSDATE,
+    error_message   VARCHAR2(4000),
+    procedure_name  VARCHAR2(100)
+);
+CREATE OR REPLACE PROCEDURE LogError (
+    p_message   IN VARCHAR2,
+    p_proc_name IN VARCHAR2
+)
+IS
+BEGIN
+    INSERT INTO error_log (
+        error_time,
+        error_message,
+        procedure_name
+    ) VALUES (
+        SYSDATE,
+        p_message,
+        p_proc_name
+    );
+EXCEPTION
+    WHEN OTHERS THEN
+        NULL;
+END;
+
+CREATE OR REPLACE PROCEDURE ProcessMonthlyInterest
+IS
+BEGIN
+    UPDATE Accounts
+    SET Balance = Balance + (Balance * 0.01),
+        LastModified = SYSDATE
+    WHERE AccountType = 'SAVINGS';
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        LogError(SQLERRM, 'ProcessMonthlyInterest');
+END;
+/
+
+CREATE OR REPLACE PROCEDURE UpdateEmployeeBonus(
+    p_department_name IN VARCHAR2,
+    p_bonus_percent   IN NUMBER
+)
+IS
+BEGIN
+    UPDATE Employees
+    SET Salary = Salary + (Salary * p_bonus_percent / 100)
+    WHERE Department = p_department_name;
+
+    IF SQL%ROWCOUNT = 0 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'No employees found in department: ' || p_department_name);
+    END IF;
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        LogError(SQLERRM, 'UpdateEmployeeBonus');
+END;
+/
+
+CREATE OR REPLACE PROCEDURE TransferFunds(
+    p_from_acct IN NUMBER,
+    p_to_acct   IN NUMBER,
+    p_amount    IN NUMBER
+)
+IS
+    v_balance NUMBER;
+BEGIN
+    SELECT Balance INTO v_balance
+    FROM Accounts
+    WHERE AccountID = p_from_acct;
+
+    IF v_balance < p_amount THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Insufficient balance in Account ID ' || p_from_acct);
+    END IF;
+
+    UPDATE Accounts
+    SET Balance = Balance - p_amount,
+        LastModified = SYSDATE
+    WHERE AccountID = p_from_acct;
+
+    UPDATE Accounts
+    SET Balance = Balance + p_amount,
+        LastModified = SYSDATE
+    WHERE AccountID = p_to_acct;
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        LogError(SQLERRM, 'TransferFunds');
+END;
+/

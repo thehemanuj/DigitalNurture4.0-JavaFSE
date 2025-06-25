@@ -1,0 +1,78 @@
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CURSOR txn_cur IS
+        SELECT a.CustomerID, t.TransactionID, t.Amount, t.TransactionDate
+        FROM Transactions t
+        JOIN Accounts a ON t.AccountID = a.AccountID
+        WHERE EXTRACT(MONTH FROM t.TransactionDate) = EXTRACT(MONTH FROM SYSDATE)
+          AND EXTRACT(YEAR FROM t.TransactionDate) = EXTRACT(YEAR FROM SYSDATE)
+        ORDER BY a.CustomerID;
+
+    v_cust_id   Accounts.CustomerID%TYPE;
+    v_txn_id    Transactions.TransactionID%TYPE;
+    v_amount    Transactions.Amount%TYPE;
+    v_txn_date  Transactions.TransactionDate%TYPE;
+BEGIN
+    OPEN txn_cur;
+    LOOP
+        FETCH txn_cur INTO v_cust_id, v_txn_id, v_amount, v_txn_date;
+        EXIT WHEN txn_cur%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('Customer ID: ' || v_cust_id ||
+                             ', Transaction ID: ' || v_txn_id ||
+                             ', Amount: ' || v_amount ||
+                             ', Date: ' || TO_CHAR(v_txn_date, 'DD-MON-YYYY'));
+    END LOOP;
+    CLOSE txn_cur;
+END;
+/
+
+DECLARE
+    CURSOR acct_cur IS
+        SELECT AccountID
+        FROM Accounts;
+
+    v_account_id  Accounts.AccountID%TYPE;
+    v_fee         NUMBER := 250;  -- Standard fee
+BEGIN
+    OPEN acct_cur;
+    LOOP
+        FETCH acct_cur INTO v_account_id;
+        EXIT WHEN acct_cur%NOTFOUND;
+
+        UPDATE Accounts
+        SET Balance = Balance - v_fee,
+            LastModified = SYSDATE
+        WHERE AccountID = v_account_id;
+    END LOOP;
+    CLOSE acct_cur;
+
+    COMMIT;
+END;
+/
+
+DECLARE
+    CURSOR loan_cur IS
+        SELECT LoanID, InterestRate
+        FROM Loans;
+
+    v_loan_id    Loans.LoanID%TYPE;
+    v_interest   Loans.InterestRate%TYPE;
+BEGIN
+    OPEN loan_cur;
+    LOOP
+        FETCH loan_cur INTO v_loan_id, v_interest;
+        EXIT WHEN loan_cur%NOTFOUND;
+
+        IF v_interest < 7 THEN
+            UPDATE Loans
+            SET InterestRate = InterestRate + 0.25
+            WHERE LoanID = v_loan_id;
+        END IF;
+    END LOOP;
+    CLOSE loan_cur;
+
+    COMMIT;
+END;
+/
