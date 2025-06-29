@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="junit_advanced.PerformanceTesterTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-06-29T04:50:56" hostname="HEMANUJ" time="0.417">
+  <properties/>
+  <testcase name="shouldCompleteWithinOneSecond()" classname="junit_advanced.PerformanceTesterTest" time="0.417"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

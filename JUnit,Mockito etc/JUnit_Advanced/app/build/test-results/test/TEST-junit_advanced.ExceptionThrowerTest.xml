@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="junit_advanced.ExceptionThrowerTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-06-29T04:50:56" hostname="HEMANUJ" time="0.502">
+  <properties/>
+  <testcase name="shouldThrowIllegalState()" classname="junit_advanced.ExceptionThrowerTest" time="0.012"/>
+  <testcase name="shouldThrowIllegalState()" classname="junit_advanced.ExceptionThrowerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

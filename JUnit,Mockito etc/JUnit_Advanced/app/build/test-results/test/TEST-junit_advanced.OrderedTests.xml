@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="junit_advanced.OrderedTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2025-06-29T04:50:56" hostname="HEMANUJ" time="0.473">
+  <properties/>
+  <testcase name="testAlpha()" classname="junit_advanced.OrderedTests" time="0.003"/>
+  <testcase name="testBeta()" classname="junit_advanced.OrderedTests" time="0.001"/>
+  <testcase name="testAlpha()" classname="junit_advanced.OrderedTests" time="0.001"/>
+  <testcase name="testBeta()" classname="junit_advanced.OrderedTests" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
