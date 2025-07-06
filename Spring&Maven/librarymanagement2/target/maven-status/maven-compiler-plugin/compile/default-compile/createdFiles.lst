@@ -1,0 +1,4 @@
+com\library2\repository\BookRepository.class
+com\library2\LibraryManagementApplication.class
+com\library2\service\BookService.class
+com\library2\aspect\LoggingAspect.class
